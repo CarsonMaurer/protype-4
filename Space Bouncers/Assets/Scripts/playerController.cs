@@ -5,6 +5,7 @@ using UnityEngine;
 public class playerController : MonoBehaviour
 {
     public float Speed = 10;
+    
     private Rigidbody2D _playerRb;
     // Start is called before the first frame update
     void Start()
@@ -21,4 +22,5 @@ public class playerController : MonoBehaviour
         Vector2 direction = new Vector2(horizontalInput, verticalInput);
         _playerRb.AddForce(direction * Speed);
     }
+   
 }
