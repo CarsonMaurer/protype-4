@@ -25,10 +25,10 @@ public class playerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Wall"))
         {
             Instantiate(PlayerFX, transform.position, PlayerFX.transform.rotation);
-            Destroy(other.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
