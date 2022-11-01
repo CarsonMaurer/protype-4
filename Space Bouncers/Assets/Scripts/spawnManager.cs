@@ -6,6 +6,7 @@ public class spawnManager : MonoBehaviour
 {
     public float Xrange = 5.5f;
     public GameObject EnemyPrefab;
+    public GameObject powerupPrefab;
     public float YRange = 2.5f;
     public int EnemyCount;
     public int WaveCount = 1;

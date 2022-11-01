@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class playerController : MonoBehaviour
     public GameObject PlayerFX;
     
     private Rigidbody2D _playerRb;
+    public GameObject Powerupindicator;
+    public bool HasPowerup = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,5 +33,19 @@ public class playerController : MonoBehaviour
             Instantiate(PlayerFX, transform.position, PlayerFX.transform.rotation);
             Destroy(this.gameObject);
         }
+        if(other.gameObject.CompareTag("powerUp"))
+        {
+            Destroy(other.gameObject);
+            Powerupindicator.gameObject.SetActive(true);
+            HasPowerup = true;
+            StartCoroutine(PowerupCountdownRoutine());
+        }
+    
+    }
+    IEnumerator PowerupCountdownRoutine()
+    {
+        yield return new WaitForSeconds(10);
+        Powerupindicator.gameObject.SetActive(false);
+        HasPowerup = false;
     }
 }
