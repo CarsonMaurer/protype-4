@@ -10,6 +10,7 @@ public class playerController : MonoBehaviour
     
     private Rigidbody2D _playerRb;
     public GameObject Powerupindicator;
+    public float PowerupStrength = 5;
     public bool HasPowerup = false;
     // Start is called before the first frame update
     void Start()
@@ -41,6 +42,18 @@ public class playerController : MonoBehaviour
             StartCoroutine(PowerupCountdownRoutine());
         }
     
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.CompareTag("Enemy") && HasPowerup)
+        {
+            Rigidbody2D enemyRb = other.gameObject.GetComponent<Rigidbody2D>();
+
+            Vector2 awayFromPlayer = (other.gameObject.transform.position - transform.position);
+            enemyRb.AddForce(awayFromPlayer* PowerupStrength, ForceMode2D.Impulse);
+
+            Powerupindicator.gameObject
+        }
     }
     IEnumerator PowerupCountdownRoutine()
     {
