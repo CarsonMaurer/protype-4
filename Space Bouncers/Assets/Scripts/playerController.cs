@@ -12,10 +12,12 @@ public class playerController : MonoBehaviour
     public GameObject Powerupindicator;
     public float PowerupStrength = 5;
     public bool HasPowerup = false;
+    private SpriteRenderer _playerSR;
     // Start is called before the first frame update
     void Start()
     {
         _playerRb = GetComponent<Rigidbody2D>();
+        _playerSR = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -31,8 +33,7 @@ public class playerController : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Wall"))
         {
-            Instantiate(PlayerFX, transform.position, PlayerFX.transform.rotation);
-            Destroy(this.gameObject);
+           StartCoroutine(GameOverRoutine());
         }
         if(other.gameObject.CompareTag("powerUp"))
         {
@@ -52,7 +53,8 @@ public class playerController : MonoBehaviour
             Vector2 awayFromPlayer = (other.gameObject.transform.position - transform.position);
             enemyRb.AddForce(awayFromPlayer* PowerupStrength, ForceMode2D.Impulse);
 
-            Powerupindicator.gameObject
+           // Powerupindicator.gameObject.SetActive(false);
+           // HasPowerup = false;
         }
     }
     IEnumerator PowerupCountdownRoutine()
@@ -60,5 +62,17 @@ public class playerController : MonoBehaviour
         yield return new WaitForSeconds(10);
         Powerupindicator.gameObject.SetActive(false);
         HasPowerup = false;
+    }
+    IEnumerator GameOverRoutine()
+    {
+        Instantiate(PlayerFX, transform.position, PlayerFX.transform.rotation);
+        //Destroy(this.gameObject);
+        Powerupindicator.gameObject.SetActive(false);
+        HasPowerup = false;
+       _playerSR.enabled = false;
+        yield return new WaitForSeconds(1.1f);
+        SceneManager.LoadScene(0);
+        
+        
     }
 }
